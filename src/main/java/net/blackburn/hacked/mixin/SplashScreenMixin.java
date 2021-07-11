@@ -1,11 +1,19 @@
+/**
+ * Thi sclass is for trying to customize the loading screen of the splash minecrafty
+ */
 package net.blackburn.hacked.mixin;
 
 
 import java.awt.Color;
+import java.nio.ByteBuffer;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.IntSupplier;
 
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL14;
+import org.lwjgl.stb.STBEasyFont;
+import org.lwjgl.system.MemoryUtil;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -48,6 +56,10 @@ public abstract class SplashScreenMixin extends DrawableHelper {
 		return MinecraftClient.getInstance().options.monochromeLogo ? MONOCHROME_BLACK : MOJANG_RED;
 	};
 
+
+    
+ 
+
 	@Inject(at = @At(value = "HEAD"), method = "render", cancellable = true)
 	protected void onRender(MatrixStack matrix, int mouseX, int mouseY, float delta, CallbackInfo info) {
 
@@ -61,7 +73,7 @@ public abstract class SplashScreenMixin extends DrawableHelper {
 		}
 
 		//Variables for the loading screen dark mode
-		int color = new Color(26, 26, 26).getRGB();
+		int color = new Color(0, 26, 0).getRGB();
 		boolean isDarkmode = true;
 		
 		float f = this.reloadCompleteTime > -1L ? (float)(l - this.reloadCompleteTime) / 1000.0F : -1.0F;
@@ -102,7 +114,7 @@ public abstract class SplashScreenMixin extends DrawableHelper {
 			if (!isDarkmode) {
 				fill(matrix, 0, 0, i, j, withAlpha(BRAND_ARGB.getAsInt(), m));
 			} else {
-				fill(matrix, 0, 0, i, j, withAlpha(color, m));
+				fill(matrix, 0, 0, i, j, withAlpha(color, 0));
 			}
 			s = MathHelper.clamp(g, 0.0F, 1.0F);
 		} else {
@@ -134,7 +146,8 @@ public abstract class SplashScreenMixin extends DrawableHelper {
 		if ((MinecraftClient.getInstance().currentScreen != null)) {
 			s = 1.0F;
 		}
-		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, s);
+    
+		RenderSystem.setShaderColor(222.0F,0F, 0F, s);
 		drawTexture(matrix, m - w, u - v, w, (int)d, -0.0625F, 0.0F, 120, 60, 120, 120);
 		drawTexture(matrix, m, u - v, w, (int)d, 0.0625F, 60.0F, 120, 60, 120, 120);
 		RenderSystem.defaultBlendFunc();
@@ -175,5 +188,6 @@ public abstract class SplashScreenMixin extends DrawableHelper {
 	
 	@Shadow protected static int withAlpha(int color, int alpha) {return 0;}
 
-
+   
+    
 }
