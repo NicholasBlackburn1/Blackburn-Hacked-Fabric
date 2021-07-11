@@ -1,4 +1,4 @@
-package net.fabricmc.example;
+package net.blackburn.hacked;
 
 import net.fabricmc.api.ModInitializer;
 
