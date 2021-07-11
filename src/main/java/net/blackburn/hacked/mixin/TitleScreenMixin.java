@@ -23,6 +23,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.client.gui.DrawableHelper;
 
 
+
 @Mixin(value = TitleScreen.class, priority = 1001)
 public class TitleScreenMixin  extends Screen{
 
@@ -36,10 +37,11 @@ public class TitleScreenMixin  extends Screen{
 
 	@Inject(method="init()V", at=@At("RETURN"))
 	private void renderCustomButtons(CallbackInfo ci) {
+		MinecraftClient.getInstance().getWindow().setTitle("Blackburn Hacked 1.17-B");
 		System.out.println("Hellow Foxy boi hacked mc");
 	}
 
-	@Inject(at = @At("INVOKE"), method = "render()V")
+	@Inject(at = @At("TAIL"), method = "render()V")
 	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta,CallbackInfo ci) {
 		
   
@@ -47,26 +49,10 @@ public class TitleScreenMixin  extends Screen{
 		
 		int j = this.width / 2 - 137;
 		
-		RenderSystem.setShader(GameRenderer::getPositionTexShader);
-	
-  
-		   String string = "Minecraft " + "UWU";
-		   if (this.client.isDemo()) {
-			  string = string + " Demo";
-		   } else {
-			  string = string + ("release".equalsIgnoreCase(this.client.getVersionType()) ? "" : "/" + this.client.getVersionType());
-		   }
-  
-		   if (this.client.isModded()) {
-			  string = string + "Modded UwU";
-		   }
-  
-		   drawStringWithShadow(matrices, this.textRenderer, string, 2, this.height - 10, 16777215 | 22);
-		   drawStringWithShadow(matrices, this.textRenderer, "Copyright Mojang AB. Do not distribute!", this.copyrightTextX, this.height - 10, 16777215 | 22);
-		   if (mouseX > this.copyrightTextX && mouseX < this.copyrightTextX + this.copyrightTextWidth && mouseY > this.height - 10 && mouseY < this.height) {
-			  fill(matrices, this.copyrightTextX, this.height - 1, this.copyrightTextX + this.copyrightTextWidth, this.height, 16777215 | 22);
-		   }
-  
+
+		   
+		   drawStringWithShadow(matrices, this.textRenderer, "Blackburn Hacked Client: 1.17.2-B", 2, this.height - 20, 16777215 | 22);
+		   
 		  
   
 		   super.render(matrices, mouseX, mouseY, delta);

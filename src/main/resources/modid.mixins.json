@@ -6,7 +6,8 @@
   "mixins": [
   ],
   "client": [
-    "TitleScreenMixin"
+    "TitleScreenMixin",
+    "SplashScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
